@@ -1,0 +1,96 @@
+from tkinter import*
+import mysql.connector
+from tkinter import ttk
+root = Tk()
+def add():
+    myu=mysql.connector.connect(host="localhost",user="root",password"",database="")
+    cur=myu.cursor()
+    s="INSERT INTO HOSPITAL (name,phone,emailid) VALUES(%s,%s,%s)"
+    b1=(names.get(),phones.get(),emailids.get())
+    cur.execute(s,b1)
+    myu.commit()
+def show():
+    myu=mysql.connector.connect(host="localhost",user="root",password="",database="")
+    cur=myu.cursor()
+    s="SELECT *from hospital"
+    cur.execute(s)
+    res =cur.fetchall()
+    for i in res:
+        tree.insert("",END,values=i)
+    myu.commit()
+
+def check():
+    txt.insert(END,"NAME:\t\t"+names.get()+"\n")
+    txt.insert(END,"PHONE:\t\t"+phones.get()+"\n")
+    txt.insert(END,"EMAIL ID:\t\t"+emailids.get()+"\n")
+    
+    
+    
+root.geometry("900x500")
+
+
+l1=Label(root,text="REGISTRATION FORM",font=("roman new time",20,"bold"),fg="red",bg="green")
+l1.place(x=200,y=10)
+
+
+names=StringVar()
+phones=StringVar()
+emailids=StringVar()
+
+Detailframe = Frame(root,bd=10,relief=RIDGE)
+Detailframe.place(x=600,y=50,width=300,height=200)
+
+
+txt = Text(Detailframe,font=("arial",10,"bold"),width=50,height=40)
+txt.place(x=0,y=0)
+
+
+
+l11=Label(root,text="NAME",fg="green")
+l11.place(x=150,y=60)
+e1=Entry(root,textvariable=names,width=30)
+e1.place(x=300,y=60)
+
+
+l11=Label(root,text="PHONE",fg="green")
+l11.place(x=150,y=100)
+
+e1=Entry(root,textvariable=phones,width=30)
+e1.place(x=300,y=100)
+
+         
+l11=Label(root,text="EMAIL ID",fg="green")
+l11.place(x=150,y=150)
+
+e1=Entry(root,textvariable=emailids,width=30)
+e1.place(x=300,y=150)
+
+b1=Button(root,text="add",fg="red",command=add)
+b1.place(x=350,y=200)
+
+col=('name','phone','emailid')
+tree=ttk.Treeview(root,height=10,show='headings',column=col)
+tree.column('name',width=150,anchor=CENTER)
+tree.column('phone',width=150,anchor=CENTER)
+tree.column('emailid',width=150,anchor=CENTER)
+
+tree.heading('name',text="NAME")
+tree.heading('phone',text="PHONE")
+tree.heading('emailid',text="EMAILID")
+tree.place(x=120,y=250)
+
+
+b1=Button(root,text="show",fg="red",command=show)
+b1.place(x=200,y=200)
+
+
+b1=Button(root,text="check",fg="red",command=check)
+b1.place(x=250,y=200)
+
+
+
+
+
+
+
+root.mainloop()
